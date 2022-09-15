@@ -54,20 +54,23 @@
   "TODO: Verifica se é um triangulo retangulo, cujos angulos são iguais a 90o.
   O resultado não é exato, dado que cada angulo é arredondado utilizando clojure.math/round."
   [a b c]
-  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]]
-    (if (some #(= 90 (math/round %)) angulos) true false)))
+  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]
+        angulo-igual-90? #(= 90 (math/round %))]
+    (boolean (some angulo-igual-90? angulos))))
 
 (defn obtuso?
   "TODO: Verifica se o triangulo é obtuso, tendo algum angulo >90o."
   [a b c]
-  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]]
-    (if (some #(> (math/round %) 90) angulos) true false)))
+  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]
+        angulo-maior-que-90? #(> (math/round %) 90)]
+    (boolean (some angulo-maior-que-90? angulos))))
 
 (defn agudo?
   "TODO: Verifica se o triangulo é obtuso, tendo algum angulo >90o."
   [a b c]
-  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]]
-    (every? #(< % 90 ) angulos)))
+  (let [angulos [(calc-angulo a b c) (calc-angulo b c a) (calc-angulo c a b)]
+        angulo-menor-que-90? #(< % 90 )]
+    (every? angulo-menor-que-90? angulos)))
 
 (defn gerar-dados-completos
   [a b c]
